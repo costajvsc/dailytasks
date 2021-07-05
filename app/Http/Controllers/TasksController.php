@@ -10,4 +10,11 @@ class TasksController extends Controller
     {
         return view('tasks', ["tasks" => Tasks::all()]);
     }
+
+    public function create(Request $request)
+    {
+        $data = $request->all();
+        Tasks::create($data);
+        return view('tasks', ["tasks" => Tasks::all()]);
+    }
 }

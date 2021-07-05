@@ -7,19 +7,26 @@
     <title>Dailytasks - Tasks</title>
 </head>
 <body>
+    <form action="/tasks" method="post">
+        <h3>Create Tasks</h3>
+        @csrf
+        <input type="text" name="title" max-length="15" placeholder="Send email">
+        <input type="text" name="description" max-length="255" placeholder="Send email to apply programmer job">
+        <button type="submit">Enviar</button>
+    </form>
     <table>
         <tr>
             <th>#</th>
             <th>Title</th>
             <th>Descriptions</th>
         </tr>
-        <tr>
-            @foreach($tasks as $t)
-            <th>{{ $t->id_tasks }}</th>
-            <th>{{ $t->title }}</th>
-            <th>{{ $t->description }}</th>
-            @endforeach
-        </tr>
+        @foreach($tasks as $t)
+            <tr>
+                <th>{{ $t->id_tasks }}</th>
+                <th>{{ $t->title }}</th>
+                <th>{{ $t->description }}</th>
+            </tr>
+        @endforeach
     </table>
 </body>
 </html>
