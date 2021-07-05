@@ -2,4 +2,4 @@
 use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'Controller@index');
+Route::get('/tasks', 'TasksController@index');
