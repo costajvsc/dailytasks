@@ -17,4 +17,11 @@ class TasksController extends Controller
         Tasks::create($data);
         return view('tasks', ["tasks" => Tasks::all()]);
     }
+
+    public function delete(Request $request)
+    {
+        $data = $request->all();
+        Tasks::destroy($data);
+        return view('tasks', ["tasks" => Tasks::all()]);
+    }
 }

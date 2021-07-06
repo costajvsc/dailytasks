@@ -19,6 +19,14 @@
                     <p class="card-subtitle text-muted">#{{$t->id_tasks}}</p>
                 </div>
                 <p class="card-text">{{$t->description}}</p>
+                <div class="">
+                    <form action="/tasks" method="post">
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" name="id_task" value="{{$t->id_tasks}}">
+                        <button href="#" class="btn p-0 text-danger">Excluir</button>
+                    </form>
+                </div>
             </div>
         </div>
         @endforeach
