@@ -24,4 +24,11 @@ class TasksController extends Controller
         Tasks::destroy($data);
         return view('tasks', ["tasks" => Tasks::all()]);
     }
+
+    public function update(Request $request)
+    {
+        $data = $request->except('_token', '_method', 'id_tasks');
+        Tasks::where($request->id)->update($data);;
+        return view('tasks', ["tasks" => Tasks::all()]);
+    }
 }
