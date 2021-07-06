@@ -24,7 +24,7 @@
                         @csrf
                         @method('delete')
                         <input type="hidden" name="id_task" value="{{$t->id_tasks}}">
-                        <button href="#" class="btn p-0 text-danger">Excluir</button>
+                        <button href="#" class="btn p-0 text-danger">Delete</button>
                     </form>
                 </div>
             </div>
