@@ -19,6 +19,7 @@ class CreateTasksTable extends Migration
             $table->string('description');
             $table->string('status', 45);
             $table->datetime('milestone');
+            $table->boolean('finished')->default(false);
             $table->datetime('finish_in')->nullable();
             $table->timestamps();
         });
