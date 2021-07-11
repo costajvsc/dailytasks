@@ -9,5 +9,5 @@ class Tasks extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_tasks';
-    protected $fillable = ['id_tasks', 'title', 'description', 'milestone', 'status'];
+    protected $fillable = ['id_tasks', 'title', 'description', 'milestone', 'finished', 'finish_in', 'status'];
 }

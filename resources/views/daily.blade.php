@@ -1,49 +1,76 @@
 @extends('_layout')
 @section('title') Tasks @endsection
 
-@section('content')
 
-<h3>Tasks</h3>
-<table class="table table-hover text-center">
-    <thead>
-        <tr>
-            <th scope="col text-left">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Status</th>
-            <th scope="col">Finished</th>
-            <th scope="col">Milestone</th>
-            <th scope="col">Options</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($tasks as $t)
-        <tr class="table-{{!$t->finished ? 'warning' : 'default'}}">
-            <th scope="row" class="text-right text-muted">{{$t->id_tasks}}</th>
-            <td>{{$t->title}}</td>
-            <td>{{$t->finished ? 'True' : 'False'}}</td>
-            <td>{{$t->status}}</td>
-            <td>{{date_format(new DateTime($t->milestone), 'd/m/Y (H:i:s)')}}</td>
-            <td>
-                <div class="">
-                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$t}})"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-danger" data-toggle="modal" data-target="#modal-delete-tasks" onclick="deleteTask({{$t}})"><i class="fas fa-trash"></i></a>
+
+<main class="bg-dark vh-100">
+    <div class="container p-2">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 text-light">
+                <h2 class="">Hi João Victor</h2>
+                <p class="font-weight-light">Welcome back to dailytasks! See your workspace.</p>
+
+                <h3>Projects</h3>
+                <p class="font-weight-light">See your projects. <span class="text-muted">(10)</span></p>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 bg-light">
+                <h2>Dailytasks</h2>
+                <p class="font-weight-light">See your dailytasks and your late tasks from previous days.</p>
+
+                <h4 class="mt-4 mb-4">Today</h4>
+                @foreach ($tasks as $task)
+                    <div class="px-4">
+                        <div class="d-flex justify-content-between align-center mb-3">
+                            <div>
+                                <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
+                                    @csrf
+                                    <button type="submit" class="btn d-inline">
+                                        <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
+                                        <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
+                                            {{$task->title}}
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="d-flex flex-column align-self-center">
+                                <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <h4 class="mt-4 mb-4">Late Tasks</h4>
+                @foreach ($lateTasks as $task)
+                    <div class="px-4">
+                        <div class="d-flex justify-content-between align-center mb-3">
+                            <div>
+                                <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
+                                    @csrf
+                                    <button type="submit" class="btn d-inline">
+                                        <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
+                                        <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
+                                            {{$task->title}}
+                                        </span>
+                                    </button>
+                                </form>
+                            </div>
+                            <div class="d-flex flex-column align-self-center">
+                                <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="d-flex justify-content-end mb-4">
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-create-tasks">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </div>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+            </div>
+        </div>
+    </div>
+</main>
 
-<div class="d-flex justify-content-end">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-tasks">
-        <i class="fas fa-tasks mr-1"></i>
-        Create a new task
-    </button>
-</div>
 
-<div class="d-flex justify-content-center">
-    {!! $tasks->links() !!}
-</div>
 
 <div class="modal" tabindex="-1" id="modal-create-tasks">
   <div class="modal-dialog">
@@ -177,8 +204,13 @@
   </div>
 </div>
 
-@endsection
+
 
 @section('scripts')
     <script src="{{asset('site/tasks.js')}}"></script>
+    <script>
+        var clock_in = new Date()
+        clock_in.setMinutes(clock_in.getMinutes() - clock_in.getTimezoneOffset())
+        document.getElementById('milestone').value = clock_in.toISOString().slice(0,16)
+    </script>
 @endsection
