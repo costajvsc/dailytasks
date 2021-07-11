@@ -9,7 +9,7 @@ class TasksController extends Controller
 {
     public function index()
     {
-        return view('tasks', ["tasks" => Tasks::paginate(5)]);
+        return view('tasks', ["tasks" => Tasks::paginate(15)]);
     }
 
     public function daily()
