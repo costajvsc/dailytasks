@@ -26,21 +26,21 @@ class TasksController extends Controller
     {
         $data = $request->all();
         Tasks::create($data);
-        return back()->with('tasks', ["tasks" => Tasks::all()]);
+        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
     }
 
     public function delete(Request $request)
     {
         $data = $request->all();
         Tasks::destroy($data);
-        return view('tasks', ["tasks" => Tasks::all()]);
+        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
     }
 
     public function update(Request $request)
     {
         $data = $request->except('_token', '_method', 'id_tasks');
-        Tasks::where($request->id)->update($data);;
-        return view('tasks', ["tasks" => Tasks::all()]);
+        Tasks::where('id_tasks', $request->id_tasks)->update($data);;
+        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
     }
 
     public function toggle(Request $request)
