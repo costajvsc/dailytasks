@@ -1,70 +1,80 @@
 @extends('_layout')
 @section('title') Tasks @endsection
-
-
-
+@section('styles')
+.col-daily{
+    max-height: 90vh;
+    scrollbar-width: none;
+}
+.col-daily::-webkit-scrollbar {
+    display: none;
+}
+@endsection
 <main class="bg-dark vh-100">
     <div class="container p-2">
         <div class="row">
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 text-light">
+            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 text-light">
                 <h2 class="">Hi João Victor</h2>
                 <p class="font-weight-light">Welcome back to dailytasks! See your workspace.</p>
 
                 <h3>Projects</h3>
                 <p class="font-weight-light">See your projects. <span class="text-muted">(10)</span></p>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 bg-light">
-                <h2>Dailytasks</h2>
-                <p class="font-weight-light">See your dailytasks and your late tasks from previous days.</p>
-
-                <h4 class="mt-4 mb-4">Today</h4>
-                @foreach ($tasks as $task)
-                    <div class="px-4">
-                        <div class="d-flex justify-content-between align-center mb-3">
-                            <div>
-                                <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
-                                    @csrf
-                                    <button type="submit" class="btn d-inline">
-                                        <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
-                                        <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
-                                            {{$task->title}}
-                                        </span>
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="d-flex flex-column align-self-center">
-                                <span class="badge badge-pill badge-primary">{{$task->status}}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-
-                <h4 class="mt-4 mb-4">Late Tasks</h4>
-                @foreach ($lateTasks as $task)
-                    <div class="px-4">
-                        <div class="d-flex justify-content-between align-center mb-3">
-                            <div>
-                                <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
-                                    @csrf
-                                    <button type="submit" class="btn d-inline">
-                                        <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
-                                        <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
-                                            {{$task->title}}
-                                        </span>
-                                    </button>
-                                </form>
-                            </div>
-                            <div class="d-flex flex-column align-self-center">
-                                <span class="badge badge-pill badge-primary">{{$task->status}}</span>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
                 <div class="d-flex justify-content-end mb-4">
-                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal-create-tasks">
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#modal-create-tasks">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
+            </div>
+            <div class="col-xl-8 col-lg-4 col-md-12 col-sm-12 bg-light h-100 overflow-auto col-daily">
+                <h2>Dailytasks</h2>
+                <p class="font-weight-light">See your dailytasks and your late tasks from previous days.</p>
+
+
+                <div class="overflow-auto">
+                    <h4 class="mt-4 mb-4">Today</h4>
+                    @foreach ($tasks as $task)
+                        <div class="px-4">
+                            <div class="d-flex justify-content-between align-center mb-3">
+                                <div>
+                                    <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
+                                        @csrf
+                                        <button type="submit" class="btn d-inline">
+                                            <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
+                                            <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
+                                                {{$task->title}}
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="d-flex flex-column align-self-center">
+                                    <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <h4 class="mt-4 mb-4">Late Tasks</h4>
+                    @foreach ($lateTasks as $task)
+                        <div class="px-4">
+                            <div class="d-flex justify-content-between align-center mb-3">
+                                <div>
+                                    <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
+                                        @csrf
+                                        <button type="submit" class="btn d-inline">
+                                            <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
+                                            <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
+                                                {{$task->title}}
+                                            </span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="d-flex flex-column align-self-center">
+                                    <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
             </div>
         </div>
     </div>
