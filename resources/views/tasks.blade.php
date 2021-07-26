@@ -24,10 +24,14 @@
             <td>{{$t->status}}</td>
             <td>{{date_format(new DateTime($t->milestone), 'd/m/Y (H:i:s)')}}</td>
             <td>
-                <div class="">
-                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$t}})"><i class="fas fa-edit"></i></a>
-                    <a href="#" class="text-danger" data-toggle="modal" data-target="#modal-delete-tasks" onclick="deleteTask({{$t}})"><i class="fas fa-trash"></i></a>
-                </div>
+                <form action="/tasks/toggle/{{$t->id_tasks}}" method="post" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn p-0">
+                        <i class="{{!$t->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle mr-1"></i>
+                    </button>
+                </form>
+                <button class="btn text-primary p-0" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$t}})"><i class="fas fa-edit mr-1"></i></button>
+                <a href="#" class="btn text-danger p-0" data-toggle="modal" data-target="#modal-delete-tasks" onclick="deleteTask({{$t}})"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         @endforeach
@@ -89,17 +93,17 @@
   </div>
 </div>
 
-<div class="modal" tabindex="-1" id="modal-update-tasks">
+<div class="dismiss modal" tabindex="-1" id="modal-update-tasks" data-js="modal-update-tasks" data-modal-target="update">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Update tasks</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" class="dismiss">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="/tasks" method="post">
+        <form action="/tasks" method="post" data-js="form-update-tasks">
             @csrf
             @method('put')
             <input type="hidden" name="id_tasks" value="" data-js="id-task-update">
@@ -126,7 +130,7 @@
                 </datalist>
             </div>
             <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn btn-outline-secondary mr-2" data-dismiss="modal">Close</button>
+                <button type="button" class="dismiss btn btn-outline-secondary mr-2" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save task</button>
             </div>
         </form>
@@ -135,17 +139,17 @@
   </div>
 </div>
 
-<div class="modal" tabindex="-1" id="modal-delete-tasks">
+<div class="dismiss modal" tabindex="-1" id="modal-delete-tasks" data-js="modal-delete-tasks" data-modal-target="delete">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title">Delete task</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" class="dismiss">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form action="/tasks" method="post">
+        <form action="/tasks" method="post" data-js="form-delete-tasks">
             @csrf
             @method('delete')
             <input type="hidden" name="id_task" value="" data-js="input-id-task-delete">
@@ -168,7 +172,7 @@
                 </li>
             </ul>
             <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
+                <button type="button" class="dismiss btn btn-secondary mr-2" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-outline-danger">Delete task</button>
             </div>
         </form>
