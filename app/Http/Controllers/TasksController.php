@@ -14,8 +14,8 @@ class TasksController extends Controller
 
     public function daily()
     {
-        $tasks = Tasks::whereDate('milestone', '=', date("Y-m-d"))->get();
-        $lateTasks = Tasks::whereDate('milestone', '<', date("Y-m-d"))->where('finished', '=', 0)->get();
+        $tasks = Tasks::whereDate('milestone', '=', date("Y-m-d"))->orderBy('milestone', 'asc')->get();
+        $lateTasks = Tasks::whereDate('milestone', '<', date("Y-m-d"))->where('finished', '=', 0)->orderBy('milestone', 'asc')->get();
         return view('daily', [
             "tasks" => $tasks,
             "lateTasks" => $lateTasks
