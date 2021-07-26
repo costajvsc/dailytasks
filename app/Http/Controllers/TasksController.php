@@ -33,7 +33,7 @@ class TasksController extends Controller
     {
         $data = $request->all();
         Tasks::destroy($data);
-        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
+        return back();
     }
 
     public function update(Request $request)
@@ -49,6 +49,6 @@ class TasksController extends Controller
         $task->finished = !$task->finished;
         $task->finish_in = $task->finish_in ? null : date("Y-m-d H:i:s");
         $task->save();
-        return redirect('/');
+        return back();
     }
 }
