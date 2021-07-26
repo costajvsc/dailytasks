@@ -7,6 +7,10 @@
     <title>Dailytasks - @yield('title')</title>
     <link rel="stylesheet" href="{{asset('site/bootstrap.css')}}">
     <script src="https://kit.fontawesome.com/d5e0d5b45e.js" crossorigin="anonymous"></script>
+    <style>
+        @yield('styles')
+    </style>
+
 </head>
 <body>
     <main class="container">@yield('content')</main>
