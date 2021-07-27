@@ -30,3 +30,33 @@ const updateTask = task => {
     milestone.value = milestoneTransform.toISOString().slice(0,16)
     status.value = task.status
 }
+
+const clearElement = element => element.value = ""
+
+const mapElements = elements => {
+    elements.map(element =>{
+        if(element.nodeName === "INPUT" || element.nodeName === "TEXTAREA")
+            clearElement(element)
+    })
+}
+
+const ClearFormTask  = option => {
+    const elements =  Array.from(document.querySelector(`[data-js=form-${option}-tasks]`).elements)
+    mapElements(elements)
+}
+
+const modalUpdate = document.querySelector('[data-js=modal-update-tasks]')
+const modalDelete = document.querySelector('[data-js=modal-delete-tasks]')
+
+const dismissModal = (event, modal) => {
+    const option = modal.getAttribute('data-modal-target')
+    const target = event.target.classList[0]
+
+    if(target === 'dismiss'){
+        ClearFormTask(option)
+        modal.style.display = 'none'
+    }
+}
+
+modalUpdate.addEventListener('click', event => dismissModal(event, modalUpdate))
+modalDelete.addEventListener('click', event => dismissModal(event, modalDelete))
