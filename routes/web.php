@@ -15,6 +15,6 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/week', 'TasksController@week');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login', 'UserController@login')->name('login');
+Route::post('/login', 'UserController@authenticate');
+Route::get('/logout', 'UserController@logout');
