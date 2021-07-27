@@ -1,11 +1,20 @@
 <?php
-use App\Http\Controllers;
+
 use Illuminate\Support\Facades\Route;
 
-Route::get('/tasks', 'TasksController@index');
-Route::post('/tasks', 'TasksController@create');
-Route::delete('/tasks', 'TasksController@delete');
-Route::put('/tasks', 'TasksController@update');
-Route::post('/tasks/toggle/{id}', 'TasksController@toggle');
+Route::middleware(['auth'])->group(function(){
+    Route::prefix('/tasks')->group(function() {
+        Route::get('/', 'TasksController@index');
+        Route::post('/', 'TasksController@create');
+        Route::delete('/', 'TasksController@delete');
+        Route::put('/', 'TasksController@update');
+        Route::post('/toggle/{id}', 'TasksController@toggle');
+    });
 
-Route::get('/', 'TasksController@daily');
+    Route::get('/', 'TasksController@daily');
+    Route::get('/week', 'TasksController@week');
+});
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
