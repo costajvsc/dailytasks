@@ -107,6 +107,7 @@ To get a local copy up and running follow these simple example steps. You need i
 - [Task Tracker - Dark Theme](https://dribbble.com/shots/4949208-Task-Tracker-Dark-Theme/attachments/4949208?mode=media)
 - [Coder Dashboard - Info Reveal](https://dribbble.com/shots/4586949/attachments/4586949-Coder-Dashboard-Info-Reveal?mode=media)
 - [Tp Concept](https://dribbble.com/shots/6903052/attachments/6903052-Tp-Concept?mode=media)
+- [Flat UI Colors 2 - German Palette](https://dribbble.com/shots/4135687-Flat-UI-Colors-2-German-Palette/attachments/946069)
 
 ## Contributing
 
