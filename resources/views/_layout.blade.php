@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dailytasks - @yield('title')</title>
     <link rel="stylesheet" href="{{asset('site/bootstrap.css')}}">
+    <link rel="shortcut icon" href="{{asset('images/logo_ico.ico')}}" type="image/x-icon">
     <script src="https://kit.fontawesome.com/d5e0d5b45e.js" crossorigin="anonymous"></script>
     <style>
         @yield('styles')
