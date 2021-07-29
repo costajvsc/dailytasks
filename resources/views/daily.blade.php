@@ -8,6 +8,12 @@
 .col-daily::-webkit-scrollbar {
     display: none;
 }
+.btn-hover{
+    opacity: 0;
+}
+.btn-hover:hover{
+    opacity: 1;
+}
 @endsection
 <main class="bg-dark vh-100">
     <div class="container p-2">
@@ -46,7 +52,13 @@
                                     </form>
                                 </div>
                                 <div class="d-flex flex-column align-self-center">
-                                    <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                    <div>
+                                        <div class="btn-hover d-inline-block">
+                                            <a href="#" class="btn text-warning p-0" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$task}})"><i class="fas fa-edit mr-1"></i></a>
+                                            <a href="#" class="btn text-danger p-0" data-toggle="modal" data-target="#modal-delete-tasks" onclick="deleteTask({{$task}})"><i class="fas fa-trash mr-1"></i></a>
+                                        </div>
+                                        <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -68,7 +80,13 @@
                                     </form>
                                 </div>
                                 <div class="d-flex flex-column align-self-center">
-                                    <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                    <div>
+                                        <div class="btn-hover d-inline-block">
+                                            <a href="#" class="btn text-warning p-0" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$task}})"><i class="fas fa-edit mr-1"></i></a>
+                                            <a href="#" class="btn text-danger p-0" data-toggle="modal" data-target="#modal-delete-tasks" onclick="deleteTask({{$task}})"><i class="fas fa-trash mr-1"></i></a>
+                                        </div>
+                                        <span class="badge badge-pill badge-primary">{{$task->status}}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -80,141 +98,9 @@
     </div>
 </main>
 
-
-
-<div class="modal" tabindex="-1" id="modal-create-tasks">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Create tasks</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="/tasks" method="post">
-            @csrf
-                <div class="form-group">
-                    <label for="title">Title task</label>
-                    <input type="text" id="title" class="form-control" name="title" maxlength="25" placeholder="Send email" required>
-                </div>
-                <div class="form-group">
-                    <label for="description">Description task</label>
-                    <textarea id="description" class="form-control" name="description"  style="overflow:auto;resize:none" rows="3" max-length="255" placeholder="Send email to apply programmer job" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="milestone">Milestone</label>
-                    <input type="datetime-local" class="form-control" id="milestone" name="milestone" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">status</label>
-                    <input list="list-status" class="form-control" id="status" name="status" placeholder="To Do" required>
-                    <datalist id="list-status">
-                        <option value="To Do">To Do</option>
-                        <option value="Doing">Doing</option>
-                        <option value="Done">Done</option>
-                    </datalist>
-                </div>
-            <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn btn-outline-secondary mr-2" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save task</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" tabindex="-1" id="modal-update-tasks">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Update tasks</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="/tasks" method="post">
-            @csrf
-            @method('put')
-            <input type="hidden" name="id_tasks" value="" data-js="id-task-update">
-            <div class="form-group">
-                <label for="title">Title task</label>
-                <input type="text" id="title" class="form-control" name="title" maxlength="25" data-js="title-task-update" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Description task</label>
-                <textarea id="description" class="form-control" name="description"  style="overflow:auto;resize:none" rows="3" max-length="255" data-js="description-task-update" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="milestone">Milestone</label>
-                <input type="datetime-local" class="form-control" id="milestone" name="milestone" data-js="milestone-task-update" required>
-            </div>
-
-            <div class="form-group">
-                <label for="status">status</label>
-                <input list="list-status" class="form-control" id="status" name="status" placeholder="To Do" data-js="status-task-update" required>
-                <datalist id="list-status">
-                    <option value="To Do">To Do</option>
-                    <option value="Doing">Doing</option>
-                    <option value="Done">Done</option>
-                </datalist>
-            </div>
-            <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn btn-outline-secondary mr-2" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save task</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" tabindex="-1" id="modal-delete-tasks">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title">Delete task</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form action="/tasks" method="post">
-            @csrf
-            @method('delete')
-            <input type="hidden" name="id_task" value="" data-js="input-id-task-delete">
-            <h5>Those follow data will <span class="text-danger">lose</span>!</h5>
-            <ul>
-                <li>
-                    <b># Task</b> <span data-js="id-task-delete">1</span>
-                </li>
-                <li>
-                    <b>Title</b> <span data-js="title-task-delete">Title</span>
-                </li>
-                <li>
-                    <b>Description </b> <span data-js="description-task-delete">Description</span>
-                </li>
-                <li>
-                    <b>Milestone: </b> <span data-js="milestone-task-delete">Milestone</span>
-                </li>
-                <li>
-                    <b>Status: </b> <span data-js="status-task-delete">Status</span>
-                </li>
-            </ul>
-            <div class="d-flex justify-content-end mb-2">
-                <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-outline-danger">Delete task</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+@include('layout/tasks/modal-create-tasks')
+@include('layout/tasks/modal-update-tasks')
+@include('layout/tasks/modal-delete-tasks')
 
 @section('scripts')
     <script src="{{asset('site/tasks.js')}}"></script>
