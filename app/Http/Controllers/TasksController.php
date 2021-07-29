@@ -23,6 +23,14 @@ class TasksController extends Controller
         ]);
     }
 
+    public function week()
+    {
+        $tasks = DB::select('SELECT * FROM tasks where yearweek(`milestone`) = yearweek(curdate()) GROUP BY milestone');
+        return view('week', [
+            "tasks" => $tasks
+        ]);
+    }
+
     public function create(TaskRequest $request)
     {
         $data = $request->all();
