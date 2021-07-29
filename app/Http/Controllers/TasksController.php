@@ -23,33 +23,34 @@ class TasksController extends Controller
         ]);
     }
 
-    public function week()
-    {
-        $tasks = DB::select('SELECT * FROM tasks where yearweek(`milestone`) = yearweek(curdate()) GROUP BY milestone');
-        return view('week', [
-            "tasks" => $tasks
-        ]);
-    }
-
     public function create(TaskRequest $request)
     {
         $data = $request->all();
-        Tasks::create($data);
-        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
+
+        if(!Tasks::create($data))
+            return back()->withErrors('An error ocurred while created a new task.');
+
+        return back()->with('success', 'Your task '.$data['title'].' was created with success.');
     }
 
     public function delete(Request $request)
     {
         $data = $request->all();
-        Tasks::destroy($data);
-        return back();
+
+        if(!Tasks::destroy($data))
+            return back()->withErrors('An error ocurred while deleted your task.');
+
+        return back()->with('warning', 'Your task was deleted with success.');
     }
 
     public function update(Request $request)
     {
         $data = $request->except('_token', '_method', 'id_tasks');
-        Tasks::where('id_tasks', $request->id_tasks)->update($data);;
-        return back()->with('tasks', ["tasks" => Tasks::paginate(15)]);
+
+        if(!Tasks::where('id_tasks', $request->id_tasks)->update($data))
+            return back()->withErrors('An error ocurred while updated your task'.$data['title'].'.');
+
+        return back()->with('warning', 'Your task '.$data['title'].' was updated with success.');
     }
 
     public function toggle(Request $request)
@@ -57,7 +58,10 @@ class TasksController extends Controller
         $task = Tasks::where('id_tasks', $request->id)->first();
         $task->finished = !$task->finished;
         $task->finish_in = $task->finish_in ? null : date("Y-m-d H:i:s");
-        $task->save();
-        return back();
+
+        if(!$task->save())
+            return back()->withErrors('An error ocurred while updated your task'.$task['title'].'.');
+
+        return back()->with('warning', 'Your task '.$task['title'].' was updated with success.');
     }
 }

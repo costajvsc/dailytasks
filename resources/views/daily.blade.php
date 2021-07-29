@@ -14,13 +14,23 @@
 .btn-hover:hover{
     opacity: 1;
 }
+.btn-logout{
+    font-size: 1.5rem;
+}
 @endsection
 <main class="bg-dark vh-100">
     <div class="container p-2">
         <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 text-light">
-                <h2 class="">Hi João Victor</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>Hi João Victor</h2>
+                    <a href="/logout" class="text-danger btn-logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
                 <p class="font-weight-light">Welcome back to dailytasks! See your workspace.</p>
+
+                <div class="mt-2 mb-4">
+                    <a href="/tasks">See all your tasks</a>
+                </div>
 
                 <h3>Projects</h3>
                 <p class="font-weight-light">See your projects. <span class="text-muted">(10)</span></p>
@@ -29,9 +39,10 @@
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
+                @include('layout/messages')
             </div>
             <div class="col-xl-8 col-lg-4 col-md-12 col-sm-12 bg-light h-100 overflow-auto col-daily">
-                <h2>Dailytasks</h2>
+                <h2 class="mt-4">Dailytasks</h2>
                 <p class="font-weight-light">See your dailytasks and your late tasks from previous days.</p>
 
 
@@ -44,7 +55,7 @@
                                     <form action="/tasks/toggle/{{$task->id_tasks}}" method="post" class="form-inline">
                                         @csrf
                                         <button type="submit" class="btn d-inline">
-                                            <i class="{{!$task->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle"></i>
+                                            <i class="{{!$task->finished ? 'far text-muted' : 'fas text-success'}} fa-check-circle"></i>
                                             <span class="font-weight-light" @if($task->finished) style="text-decoration: line-through" @endif>
                                                 {{$task->title}}
                                             </span>

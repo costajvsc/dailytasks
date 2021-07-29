@@ -2,10 +2,12 @@
 @section('title') Tasks @endsection
 
 @section('content')
+@include('layout/navbar')
 
 <h3>Tasks</h3>
 @include('layout/messages')
 
+<div class="table-responsive">
 <table class="table table-hover text-center">
     <thead>
         <tr>
@@ -29,7 +31,7 @@
                 <form action="/tasks/toggle/{{$t->id_tasks}}" method="post" class="d-inline">
                     @csrf
                     <button type="submit" class="btn p-0">
-                        <i class="{{!$t->finished ? 'far text-muted' : 'fas text-info'}} fa-check-circle mr-1"></i>
+                        <i class="{{!$t->finished ? 'far text-muted' : 'fas text-success'}} fa-check-circle mr-1"></i>
                     </button>
                 </form>
                 <a href="#" class="btn text-warning p-0" data-toggle="modal" data-target="#modal-update-tasks" onclick="updateTask({{$t}})"><i class="fas fa-edit mr-1"></i></a>
@@ -39,8 +41,9 @@
         @endforeach
     </tbody>
 </table>
+</div>
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-end mb-4">
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-tasks">
         <i class="fas fa-tasks mr-1"></i>
         Create a new task
