@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tasks;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
@@ -22,7 +23,7 @@ class TasksController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function create(TaskRequest $request)
     {
         $data = $request->all();
         Tasks::create($data);
