@@ -1,4 +1,4 @@
-@extends('_layout')
+@extends('layout/_layout')
 @section('title') Tasks @endsection
 @section('styles')
 .col-daily{

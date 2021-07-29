@@ -1,9 +1,11 @@
-@extends('_layout')
+@extends('layout/_layout')
 @section('title') Tasks @endsection
 
 @section('content')
 
 <h3>Tasks</h3>
+@include('layout/messages')
+
 <table class="table table-hover text-center">
     <thead>
         <tr>
@@ -76,7 +78,7 @@
 
                 <div class="form-group">
                     <label for="status">status</label>
-                    <input list="list-status" class="form-control" id="status" name="status" placeholder="To Do" required>
+                    <input list="list-status" class="form-control" id="status" name="status" placeholder="To Do" >
                     <datalist id="list-status">
                         <option value="To Do">To Do</option>
                         <option value="Doing">Doing</option>
