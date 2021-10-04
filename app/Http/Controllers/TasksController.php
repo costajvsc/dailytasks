@@ -23,6 +23,15 @@ class TasksController extends Controller
         ]);
     }
 
+    public function tomorrow()
+    {
+        $tasks = Tasks::whereDate('milestone', '=', date("Y-m-d", strtotime("+1 day")))->orderBy('milestone', 'asc')->get();
+
+        return view('tomorrow',[
+            "tasks" => $tasks
+        ]);
+    }
+
     public function create(TaskRequest $request)
     {
         $data = $request->all();

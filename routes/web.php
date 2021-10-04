@@ -13,6 +13,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/', 'TasksController@daily');
     Route::get('/week', 'TasksController@week');
+    Route::get('/tomorrow', 'TasksController@tomorrow');
 });
 
 Route::get('/login', 'UserController@login')->name('login');
